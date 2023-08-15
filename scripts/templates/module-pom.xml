@@ -1,10 +1,11 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.ibm.cloud</groupId>
         <artifactId>my-services</artifactId>
+        <groupId>com.ibm.cloud</groupId>
         <version>99-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
@@ -19,12 +20,12 @@
             <artifactId>sdk-core</artifactId>
         </dependency>
         <dependency>
-            <artifactId>my-services-common</artifactId>
             <groupId>${project.groupId}</groupId>
+            <artifactId>my-services-common</artifactId>
         </dependency>
         <dependency>
-            <artifactId>my-services-common</artifactId>
             <groupId>${project.groupId}</groupId>
+            <artifactId>my-services-common</artifactId>
             <type>test-jar</type>
             <classifier>tests</classifier>
             <scope>test</scope>
@@ -40,17 +41,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito2</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-testng</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    
     <developers>
         <developer>
             <name>IBM Cloud DevX SDK Development</name>
@@ -58,5 +54,4 @@
             <url>https://www.ibm.com/</url>
         </developer>
     </developers>
-
 </project>

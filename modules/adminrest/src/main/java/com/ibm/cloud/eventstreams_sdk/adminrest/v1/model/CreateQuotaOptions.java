@@ -98,6 +98,18 @@ public class CreateQuotaOptions extends GenericModel {
       this.consumerByteRate = consumerByteRate;
       return this;
     }
+
+    /**
+     * Set the quotaDetail.
+     *
+     * @param quotaDetail the quotaDetail
+     * @return the CreateQuotaOptions builder
+     */
+    public Builder quotaDetail(QuotaDetail quotaDetail) {
+      this.producerByteRate = quotaDetail.producerByteRate();
+      this.consumerByteRate = quotaDetail.consumerByteRate();
+      return this;
+    }
   }
 
   protected CreateQuotaOptions() { }
@@ -122,7 +134,7 @@ public class CreateQuotaOptions extends GenericModel {
   /**
    * Gets the entityName.
    *
-   * The entity name of the quotas can be `default` or an IAM Service ID that starts with an `iam-ServiceId` prefix.
+   * The entity name of new quota to be created for.
    *
    * @return the entityName
    */

@@ -92,7 +92,7 @@ public class DeleteQuotaOptions extends GenericModel {
   /**
    * Gets the entityName.
    *
-   * The entity name of the quotas can be `default` or an IAM Service ID that starts with an `iam-ServiceId` prefix.
+   * The entity name of the quota to be deleted for.
    *
    * @return the entityName
    */

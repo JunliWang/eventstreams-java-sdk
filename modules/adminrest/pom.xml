@@ -9,9 +9,9 @@
         <relativePath>../..</relativePath>
     </parent>
 
-    <artifactId>eventstreams_sdk</artifactId>
+    <artifactId>eventstreams_sdk-adminrest</artifactId>
 
-    <name>IBM Cloud Eventstreams Java SDK</name>
+    <name>IBM Cloud Event Streams Java SDK</name>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -22,10 +22,12 @@
         <dependency>
             <artifactId>adminrest-common</artifactId>
             <groupId>${project.groupId}</groupId>
+            <version>99-SNAPSHOT</version>
         </dependency>
         <dependency>
             <artifactId>adminrest-common</artifactId>
             <groupId>${project.groupId}</groupId>
+            <version>99-SNAPSHOT</version>
             <type>test-jar</type>
             <classifier>tests</classifier>
             <scope>test</scope>
