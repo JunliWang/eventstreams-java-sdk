@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/IBM/eventstreams-java-sdk.svg?&branch=main)](https://travis-ci.com/IBM/eventstreams-java-sdk)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-# IBM Cloud Eventstreams Java SDK Version 1.2.0
+# IBM Cloud Event Streams Java SDK Version 1.3.0
 
 ## Introduction
 
@@ -11,10 +11,10 @@ It is optimized for event ingestion into IBM Cloud and event stream distribution
 Event Streams provides a REST API to help connect your existing systems to your Event Streams Kafka cluster. 
 Using the API, you can integrate Event Streams with any system that supports RESTful APIs.
 
-Documentation [IBM Cloud Eventstreams Service APIs](https://cloud.ibm.com/apidocs/event-streams).
+Documentation [IBM Cloud Event Streams Service APIs](https://cloud.ibm.com/apidocs/event-streams).
 
-This is the Eventstreams Software Development Kit for `Java`
-It includes a library of functions used to access a Eventstreams cluster.
+This is the Event Streams Software Development Kit for `Java`
+It includes a library of functions used to access a Event Streams cluster.
 
 ## Table of Contents
 
@@ -45,7 +45,7 @@ It includes a library of functions used to access a Eventstreams cluster.
 
 ## Overview
 
-The IBM Cloud Eventstreams SDK Java SDK allows developers to programmatically interact with the following IBM Cloud services:
+The IBM Cloud Event Streams SDK Java SDK allows developers to programmatically interact with the following IBM Cloud services:
 
 Service Name | Artifact Coordinates
 --- | ---
@@ -56,11 +56,11 @@ Service Name | Artifact Coordinates
 * An [IBM Cloud](https://cloud.ibm.com/registration) account.
 * The [IBM Cloud CLI.](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
 * An IAM API key to allow the SDK to access your account. Create one [here](https://cloud.ibm.com/iam/apikeys).
-* A IBM Cloud Eventstreams Instance Create one [here](https://cloud.ibm.com/registration?target=/catalog/services/event-streams)
+* A IBM Cloud Event Streams Instance Create one [here](https://cloud.ibm.com/registration?target=/catalog/services/event-streams)
 * Java 8 or above.
 
 ## Installation
-The current version of this SDK is: 1.2.0
+The current version of this SDK is: 1.3.0
 
 Each service's artifact coordinates are listed in the table above.
 
@@ -78,13 +78,13 @@ artifact coordinates (group id, artifact id and version) for the service, like t
 <dependency>
     <groupId>com.ibm.cloud</groupId>
     <artifactId>eventstreams_sdk</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
 ##### Gradle
 ```gradle
-'com.ibm.cloud:eventstreams_sdk:1.2.0'
+'com.ibm.cloud:eventstreams_sdk:1.3.0'
 ```
 
 ## Using the SDK
@@ -109,7 +109,7 @@ See [CONTRIBUTING](CONTRIBUTING.md).
 
 ## License
 
-The IBM Cloud Eventstreams SDK Java SDK is released under the Apache 2.0 license.
+The IBM Cloud Event Streams SDK Java SDK is released under the Apache 2.0 license.
 The license's full text can be found in [LICENSE](LICENSE).
 
 # Event Streams Administration REST API
@@ -128,11 +128,6 @@ operations:
   - [List which topics are mirrored](#list-current-mirroring-topic-selection)
   - [Replace selection of topics which are mirrored](#replace-selection-of-topics-which-are-mirrored)
   - [List active mirroring topics](#list-active-mirroring-topics)
-  - [Create a Kafka quota](#creating-a-kafka-quota)
-  - [List Kafka quotas](#listing-kafka-quotas)
-  - [Get a Kafka quota](#getting-a-kafka-quota)
-  - [Delete a Kafka quota](#deleting-a-kafka-quota)
-  - [Update a Kafka quota information](#updating-kafka-quotas-information)
   
 The Admin REST API is also [documented using swagger](./admin-rest-api.yaml).
 
@@ -155,7 +150,7 @@ $ibmcloud resource service-key "${service_instance_key_name}" --output json > jq
 ## Environment Setup
 In the examples you must set and export environment variables as follows:
 - Either the `API_KEY` or `BEARER_TOKEN` to use for authentication.
-- `KAFKA_ADMIN_URL` to point to your Eventstreams admin endpoint.
+- `KAFKA_ADMIN_URL` to point to your Event Streams admin endpoint.
 
 In addition, the `Content-type` header has to be set to `application/json`.
 
@@ -221,10 +216,10 @@ import java.util.List;
 import com.ibm.cloud.eventstreams_sdk.adminrest.v1.Adminrest;
 import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.ListTopicsOptions;
 import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.TopicDetail;
+import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.TopicDetailReplicaAssignmentsItem;
 import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.CreateTopicOptions;
 import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.DeleteTopicOptions;
 import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.UpdateTopicOptions;
-import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.ReplicaAssignment;
 import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.GetMirroringActiveTopicsOptions;
 import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.MirroringActiveTopics;
 import com.ibm.cloud.eventstreams_sdk.adminrest.v1.model.ReplaceMirroringTopicSelectionOptions;
@@ -239,9 +234,8 @@ import com.ibm.cloud.sdk.core.http.HttpStatus;
 public class AdminrestExample {
 
 
-  private AdminrestExample() {
-  }
-}
+    private AdminrestExample() {
+    }
 // End Code Setup
 ```
 
@@ -517,16 +511,14 @@ Expected status codes
                 System.out.println("\tpartitions:\t" + topicDetail.getPartitions());
                 System.out.println("\treplication factor:\t" + topicDetail.getReplicationFactor());
                 System.out.println("\tretention ms:\t" + topicDetail.getRetentionMs());
+                 System.out.println("\t\tcleanup policy:\t" + topicDetail.getCleanupPolicy());
                 // Print configs.
-                System.out.println("\t\tcleanup policy:\t" + topicDetail.getConfigs().getCleanupPolicy());
-                System.out.println("\t\tmin insync replicas:\t" + topicDetail.getConfigs().getMinInsyncReplicas());
                 System.out.println("\t\tretention bytes:\t" + topicDetail.getConfigs().getRetentionBytes());
-                System.out.println("\t\tretention ms:\t" + topicDetail.getConfigs().getRetentionMs());
                 System.out.println("\t\tsegment bytes:\t" + topicDetail.getConfigs().getSegmentBytes());
                 System.out.println("\t\tsegment index bytes:\t" + topicDetail.getConfigs().getSegmentIndexBytes());
                 System.out.println("\t\tsegment ms:\t" + topicDetail.getConfigs().getSegmentMs());
                 // Print assignments.
-                for (ReplicaAssignment replicaAssignment : topicDetail.getReplicaAssignments()) {
+                for (TopicDetailReplicaAssignmentsItem replicaAssignment : topicDetail.getReplicaAssignments()) {
                     System.out.println("\t\treplica id:\t" + replicaAssignment.getId());
                     System.out.println("\t\treplica brokers:\t" + replicaAssignment.getBrokers().getReplicas());
                 }
@@ -727,241 +719,3 @@ Expected status codes
         }
     } 
 ```
-
-### Creating a Kafka quota
----
-To create a Kafka quota the admin REST SDK issues a POST request to the /admin/quotas/ENTITYNAME path (where `ENTITYNAME` is the name of the entity that you want to create. The entity name of the quota can be `default` or an IAM Service ID that starts with an `iam-ServiceId` prefix).
-The body of the request contains a JSON document, for example:
-```json
-{
-    "producer_byte_rate": 1024,
-    "consumer_byte_rate": 1024
-}
-```
-
-Create Quota would create either 1 or 2 quotas depending on what data is passed in.
-
-Expected HTTP status codes:
-
-- 201: Quota creation request was created.
-- 400: Invalid request JSON.
-- 403: Not authorized to create quota.
-- 422: Semantically invalid request.
-
-If the request to create a Kafka quota succeeds then HTTP status code 201 (Created) is returned. If the operation fails then a HTTP status code of 422 (Un-processable Entity) is returned, and a JSON object containing additional information about the failure is returned as the body of the response.
-
-
-
-
-#### Example
-
-```java
-    private static void createQuota(Adminrest service, String entityName) {
-        System.out.println("Create Quota");
-
-        // Construct an instance of the CreateQuotaOptions.
-        CreateQuotaOptions createQuotaOptions = new CreateQuotaOptions.Builder()
-        .entityName(entityName)
-        .producerByteRate(1024)
-        .consumerByteRate(1024)
-        .build();
-
-        // Invoke operation with valid options.
-        Response<Void> response = service.createQuota(createQuotaOptions).execute();
-
-        // Print the results.
-        if (response.getStatusCode() == HttpStatus.CREATED) {
-        System.out.println("\tQuota created for the entity: " + entityName);
-        } else {
-        System.out.println("\tError creating quota for the entity: " + entityName);
-        }
-    } 
-```
-
-
-### Deleting a Kafka quota
----
-To delete a Kafka quota, the admin REST SDK issues a DELETE request to the `/admin/quotas/ENTITYNAME`
-path (where `ENTITYNAME` is the name of the entity that you want to delete. The entity name of the quota can be `default` or an IAM Service ID that starts with an `iam-ServiceId` prefix).
-
-Expected return codes:
-- 202: Quota deletion request was accepted.
-- 403: Not authorized to delete quota.
-- 404: Entity Quota does not exist.
-- 422: Semantically invalid request.
-
-A 202 (Accepted) status code is returned if the REST API accepts the delete
-request or status code 422 (Un-processable Entity) if the delete request is
-rejected. If a delete request is rejected then the body of the HTTP response
-will contain a JSON object which provides additional information about why
-the request was rejected.
-
-#### Example
-
-```java
-    private static void deleteQuota(Adminrest service, String entityName) {
-        System.out.println("Delete Quota");
-
-        // Construct an instance of the DeleteQuotaOptions.
-        DeleteQuotaOptions deleteQuotaOptions = new DeleteQuotaOptions.Builder()
-        .entityName(entityName)
-        .build();
-
-        // Invoke operation with valid options.
-        Response<Void> response = service.deleteQuota(deleteQuotaOptions).execute();
-
-        // Print the results.
-        if (response.getStatusCode() == HttpStatus.ACCEPTED) {
-        System.out.println("\tQuota deleted for the entity: " + entityName);
-        } else {
-        System.out.println("\tError deleting quota for the entity: " + entityName);
-        }
-    }
-```
-
-### Listing Kafka quotas
----
-You can list all of your Kafka quotas by issuing a GET request to the
-`/admin/quotas` path.
-
-Expected status codes:
-- 200: quotas list is returned as JSON in the following format:
-```json
-{
-  "data": [
-    {
-      "entity_name": "default",
-      "producer_byte_rate": 1024,
-      "consumer_byte_rate": 1024
-    },
-    {
-      "entity_name": "iam-ServiceId-38288dac-1f80-46dd-b135-a56153296bcd",
-      "producer_byte_rate": 1024
-    },
-    {
-      "entity_name": "iam-ServiceId-38288dac-1f80-46dd-b135-e56153296fgh",
-      "consumer_byte_rate": 2048
-    },
-    {
-      "entity_name": "iam-ServiceId-38288dac-1f80-46dd-b135-f56153296bfa",
-      "producer_byte_rate": 2048,
-      "consumer_byte_rate": 1024
-    }
-  ]
-}
-```
-
-A successful response will have HTTP status code 200 (OK) and contain an
-array of JSON objects, where each object represents a Kafka quota and has the
-following properties:
-
-| Property name     | Description                                             |
-|-------------------|---------------------------------------------------------|
-| entity_name       | The entity name of the quota can be `default` or an IAM Service ID that starts with an `iam-ServiceId` prefix.                           |
-| producer_byte_rate| The producer byte rate quota value.            |
-| consumer_byte_rate| The consumer byte rate quota value.            |
-
-#### Example
-
-```java
-    private static void listQuotas(Adminrest service) {
-        System.out.println("List Quotas");
-
-        // Invoke operation
-        Response<EntityQuotasList> response = service.listQuotas().execute();
-
-        // Print the results.
-        if (response.getStatusCode() == HttpStatus.OK) {
-        for (EntityQuotaDetail entityQuota : response.getResult().getData()) {
-        System.out.println("\tentity_name: " + entityQuota.getEntityName() + "\t producer_byte_rate: " + entityQuota.getProducerByteRate() + "\tconsumer_byte_rate: " + entityQuota.getConsumerByteRate());
-        }
-        } else {
-        System.out.println("\tError listing quotas");
-        }
-    }
-```
-
-### Getting a Kafka quota
----
-To get a Kafka quota detail information, issue a GET request to the `/admin/quotas/ENTITYNAME`
-path (where `ENTITYNAME` is the name of the entity that you want to get. The entity name of the quota can be `default` or an IAM Service ID that starts with an `iam-ServiceId` prefix).
-
-Expected status codes
-- 200: Retrieve quota details successfully in following format:
-```json
-{
-  "producer_byte_rate": 1024,
-  "consumer_byte_rate": 1024
-}
-```
-- 403: Not authorized.
-
-#### Example
-
-```java
-    private static void getQuota(Adminrest service, String entityName) {
-
-        System.out.println("Get Entity Quota Details");
-
-        // Construct an instance of the GetQuotaOptions.
-        GetQuotaOptions getQuotaOptions = new GetQuotaOptions.Builder()
-        .entityName(entityName)
-        .build();
-
-        // Invoke operation with valid options.
-        Response<QuotaDetail> response = service.getQuota(getQuotaOptions).execute();
-
-        // Print the results.
-        if (response.getStatusCode() == HttpStatus.OK) {
-        QuotaDetail entityQuotaDetail = response.getResult();
-        System.out.println("\tproducer_byte_rate: " + entityQuotaDetail.getProducerByteRate() + "\tconsumer_byte_rate: " + entityQuotaDetail.getConsumerByteRate());
-        } else {
-        System.out.println("\tError getting quota details for the entity: " + entityName);
-        }
-    } 
-```
-
-### Updating Kafka quota's information
----
-To Update an entity's quota, issue a
-`PATCH` request to `/admin/quotas/ENTITYNAME` with the following body:
-(where `ENTITYNAME` is the name of the entity that you want to update. The entity name of the quota can be `default` or an IAM Service ID that starts with an `iam-ServiceId` prefix).
-```json
-{
-  "producer_byte_rate": 2048,
-  "consumer_byte_rate": 2048
-}
-```
-
-Expected status codes
-- 202: Update quota request was accepted.
-- 400: Invalid request JSON.
-- 404: Entity quota specified does not exist.
-- 422: Semantically invalid request.
-
-#### Example
-
-```java
-    private static void updateQuota(Adminrest service, String entityName) {
-
-        System.out.println("Update Quota");
-
-        // Construct an instance of the UpdateQuotaOptions.
-        UpdateQuotaOptions updateQuotaOptions = new UpdateQuotaOptions.Builder()
-        .entityName(entityName)
-        .producerByteRate(2048)
-        .consumerByteRate(2048)
-        .build();
-
-        // Invoke operation with valid options.
-        Response<Void> response = service.updateQuota(updateQuotaOptions).execute();
-
-        // Print the results.
-        if (response.getStatusCode() == HttpStatus.ACCEPTED) {
-        System.out.println("\tQuota updated for the entity: " + entityName);
-        } else {
-        System.out.println("\tError updating quota for the entity: " + entityName);
-        }
-    } 
-```
-

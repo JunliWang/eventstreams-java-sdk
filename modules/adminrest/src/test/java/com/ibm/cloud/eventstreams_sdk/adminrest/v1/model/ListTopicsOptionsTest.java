@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,11 +33,7 @@ public class ListTopicsOptionsTest {
   public void testListTopicsOptions() throws Throwable {
     ListTopicsOptions listTopicsOptionsModel = new ListTopicsOptions.Builder()
       .topicFilter("testString")
-      .perPage(Long.valueOf("26"))
-      .page(Long.valueOf("26"))
       .build();
     assertEquals(listTopicsOptionsModel.topicFilter(), "testString");
-    assertEquals(listTopicsOptionsModel.perPage(), Long.valueOf("26"));
-    assertEquals(listTopicsOptionsModel.page(), Long.valueOf("26"));
   }
 }
